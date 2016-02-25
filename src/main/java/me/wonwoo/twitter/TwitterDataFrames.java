@@ -37,7 +37,7 @@ public class TwitterDataFrames {
 
         logger.info("size : {}", filter.collectAsList().size());
 
-        List<String> filterCollect = filter.javaRDD().map(row -> "Name: " + row.getAs("text")).collect();
+        List<String> filterCollect = filter.javaRDD().map(row -> "text: " + row.getAs("text")).collect();
 
         logger.info(
                 "filterCollect : {}", filterCollect.stream().collect(joining("\n"))
@@ -51,7 +51,7 @@ public class TwitterDataFrames {
         DataFrame sqlFrame = sqlContext.sql("SELECT text FROM tweets where text like '%트위터%'");
         logger.info("size : {}", sqlFrame.collectAsList().size());
 
-        List<String> sqlCollect = sqlFrame.javaRDD().map(row -> "Name: " + row.getString(0)).collect();
+        List<String> sqlCollect = sqlFrame.javaRDD().map(row -> "text: " + row.getString(0)).collect();
 
         logger.info(
                 "sqlCollect : {}", sqlCollect.stream().collect(joining("\n"))
