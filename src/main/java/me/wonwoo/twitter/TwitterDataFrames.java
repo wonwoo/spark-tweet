@@ -29,11 +29,16 @@ public class TwitterDataFrames {
         SQLContext sqlContext = new SQLContext(javaSparkContext);
         DataFrame dataFrame = sqlContext.read().json(PATH);
         dataFrame.show();
+        long count = dataFrame.count();
+        logger.info("total Count : {} ", count);
         dataFrame.select("text").show();
         dataFrame.groupBy("text").count().show();
 
+
+        dataFrame.groupBy("lang").count().show();
+
         //filter
-        DataFrame filter = dataFrame.filter(dataFrame.col("text").rlike("트위터"));
+        DataFrame filter = dataFrame.filter(dataFrame.col("text").rlike("spring"));
 
         logger.info("size : {}", filter.collectAsList().size());
 
@@ -48,7 +53,7 @@ public class TwitterDataFrames {
 
 
         //sql
-        DataFrame sqlFrame = sqlContext.sql("SELECT text FROM tweets where text like '%트위터%'");
+        DataFrame sqlFrame = sqlContext.sql("SELECT text FROM tweets where text like '%spark%'");
         logger.info("size : {}", sqlFrame.collectAsList().size());
 
         List<String> sqlCollect = sqlFrame.javaRDD().map(row -> "text: " + row.getString(0)).collect();

@@ -25,7 +25,7 @@ public class TwitterStreaming {
     static ObjectMapper mapper = new ObjectMapper();
 
     //필터링
-    static String[] filters = {"필리버스터"};
+    static String[] filters = {"spring", "spark"};
 
     //떨굴 파일 경로
     private static String PATH = "/Users/wonwoo/stream/twitter/";
